@@ -1,1 +1,343 @@
 
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বাংলা সোশাল</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f0f2f5;
+ color:#222;
+}
+header{
+ background:#0866ff;
+ color:white;
+ padding:14px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ position:sticky;
+ top:0;
+ z-index:10;
+}
+.logo{font-size:23px;font-weight:bold}
+.search{
+ width:40%;
+ padding:10px;
+ border:0;
+ border-radius:20px;
+}
+nav{
+ background:white;
+ display:flex;
+ justify-content:space-around;
+ padding:12px 2px;
+ position:sticky;
+ top:55px;
+ z-index:9;
+ box-shadow:0 2px 5px #ddd;
+}
+nav button{
+ border:0;
+ background:none;
+ font-size:14px;
+ cursor:pointer;
+}
+.container{
+ max-width:700px;
+ margin:15px auto;
+ padding:0 10px;
+}
+.card{
+ background:white;
+ padding:15px;
+ border-radius:12px;
+ margin-bottom:14px;
+ box-shadow:0 1px 4px #ddd;
+}
+.profile{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+.avatar{
+ width:42px;
+ height:42px;
+ border-radius:50%;
+ background:#0866ff;
+ color:white;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:20px;
+}
+input,textarea{
+ border:0;
+ outline:none;
+ background:#f0f2f5;
+ padding:12px;
+ border-radius:20px;
+ width:100%;
+}
+textarea{
+ border-radius:10px;
+ resize:vertical;
+ min-height:65px;
+}
+.action{
+ display:flex;
+ justify-content:space-around;
+ margin-top:12px;
+ border-top:1px solid #eee;
+ padding-top:12px;
+}
+.action button{
+ border:0;
+ background:none;
+ font-size:15px;
+ cursor:pointer;
+}
+.primary{
+ background:#0866ff;
+ color:white;
+ border:0;
+ border-radius:8px;
+ padding:10px 20px;
+ cursor:pointer;
+}
+.post-image{
+ width:100%;
+ border-radius:10px;
+ margin-top:12px;
+}
+.page{display:none}
+.page.active{display:block}
+.story{
+ display:flex;
+ gap:10px;
+ overflow-x:auto;
+}
+.story-item{
+ min-width:90px;
+ height:120px;
+ background:#dce8ff;
+ border-radius:12px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ font-weight:bold;
+}
+h3{margin-top:0}
+footer{
+ text-align:center;
+ padding:20px;
+ color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">বাংলা সোশাল</div>
+ <input class="search" id="search" placeholder="সার্চ করুন...">
+</header>
+
+<nav>
+ <button onclick="showPage('home')">🏠 হোম</button>
+ <button onclick="showPage('friends')">👥 বন্ধু</button>
+ <button onclick="showPage('messages')">💬 মেসেজ</button>
+ <button onclick="showPage('notifications')">🔔 নোটিফিকেশন</button>
+ <button onclick="showPage('profile')">👤 প্রোফাইল</button>
+</nav>
+
+<div class="container">
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+<div class="card">
+<h3>স্টোরি</h3>
+<div class="story">
+<div class="story-item">➕<br>স্টোরি যোগ</div>
+<div class="story-item">🌸<br>বন্ধু ১</div>
+<div class="story-item">🌿<br>বন্ধু ২</div>
+<div class="story-item">🌅<br>বন্ধু ৩</div>
+</div>
+</div>
+
+<div class="card">
+<h3>নতুন পোস্ট তৈরি করুন</h3>
+<textarea id="postText" placeholder="আপনার মনে কী চলছে?"></textarea>
+<br><br>
+<button class="primary" onclick="addPost()">পোস্ট করুন</button>
+</div>
+
+<div id="feed">
+<div class="card post">
+<div class="profile">
+<div class="avatar">আ</div>
+<div>
+<b>বাংলা সোশাল</b><br>
+<small>এইমাত্র</small>
+</div>
+</div>
+<p>বাংলা সোশালে আপনাকে স্বাগতম! ❤️</p>
+<div class="action">
+<button onclick="likePost(this)">👍 লাইক</button>
+<button onclick="commentPost(this)">💬 কমেন্ট</button>
+<button onclick="sharePost()">↗ শেয়ার</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FRIENDS -->
+<section id="friends" class="page">
+<div class="card">
+<h3>👥 বন্ধু খুঁজুন</h3>
+<input placeholder="বন্ধুর নাম লিখুন">
+<br><br>
+<button class="primary" onclick="alert('বন্ধু খোঁজার সুবিধা শিগগিরই আসবে!')">সার্চ</button>
+</div>
+</section>
+
+<!-- MESSAGES -->
+<section id="messages" class="page">
+<div class="card">
+<h3>💬 মেসেজ</h3>
+<p>আপনার মেসেজ এখানে দেখা যাবে।</p>
+<p>মেসেজিং সুবিধা শিগগিরই যুক্ত হবে।</p>
+</div>
+</section>
+
+<!-- NOTIFICATIONS -->
+<section id="notifications" class="page">
+<div class="card">
+<h3>🔔 নোটিফিকেশন</h3>
+<p>এখনো কোনো নতুন নোটিফিকেশন নেই।</p>
+</div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile" class="page">
+<div class="card">
+<div class="avatar" style="width:75px;height:75px">আ</div>
+<h2>আমার প্রোফাইল</h2>
+<p>বাংলা সোশালের সদস্য</p>
+<button class="primary" onclick="alert('প্রোফাইল এডিট সুবিধা শিগগিরই আসবে!')">প্রোফাইল এডিট</button>
+</div>
+</section>
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
+<div class="card">
+<h3>⚙️ সেটিংস</h3>
+<p>অ্যাকাউন্ট সেটিংস</p>
+<p>গোপনীয়তা</p>
+<p>ভাষা: বাংলা</p>
+<p>লগ আউট</p>
+</div>
+</section>
+
+<footer>
+বাংলা সোশাল © 2026
+<br>সবার জন্য একটি বাংলা সামাজিক প্ল্যাটফর্ম ❤️
+</footer>
+
+</div>
+
+<script>
+function showPage(page){
+ document.querySelectorAll('.page').forEach(p=>{
+  p.classList.remove('active');
+ });
+ document.getElementById(page).classList.add('active');
+ window.scrollTo(0,0);
+}
+
+function addPost(){
+ let text=document.getElementById('postText').value.trim();
+ if(!text){
+  alert('আগে কিছু লিখুন!');
+  return;
+ }
+
+ let post=document.createElement('div');
+ post.className='card post';
+
+ let profile=document.createElement('div');
+ profile.className='profile';
+
+ let avatar=document.createElement('div');
+ avatar.className='avatar';
+ avatar.textContent='আ';
+
+ let name=document.createElement('b');
+ name.textContent='আপনি';
+
+ profile.append(avatar,name);
+
+ let content=document.createElement('p');
+ content.textContent=text;
+
+ let action=document.createElement('div');
+ action.className='action';
+ action.innerHTML=`
+ <button onclick="likePost(this)">👍 লাইক</button>
+ <button onclick="commentPost(this)">💬 কমেন্ট</button>
+ <button onclick="sharePost()">↗ শেয়ার</button>
+ `;
+
+ post.append(profile,content,action);
+ document.getElementById('feed').prepend(post);
+ document.getElementById('postText').value='';
+}
+
+function likePost(btn){
+ if(btn.dataset.liked==='yes'){
+  btn.dataset.liked='no';
+  btn.textContent='👍 লাইক';
+ }else{
+  btn.dataset.liked='yes';
+  btn.textContent='❤️ লাইক দেওয়া হয়েছে';
+ }
+}
+
+function commentPost(btn){
+ let comment=prompt('আপনার কমেন্ট লিখুন:');
+ if(comment){
+  let p=document.createElement('p');
+  p.textContent='💬 '+comment;
+  btn.closest('.post').append(p);
+ }
+}
+
+function sharePost(){
+ if(navigator.share){
+  navigator.share({
+   title:'বাংলা সোশাল',
+   text:'বাংলা সোশাল দেখুন!'
+  });
+ }else{
+  alert('শেয়ার করতে ব্রাউজারের শেয়ার অপশন ব্যবহার করুন।');
+ }
+}
+
+document.getElementById('search').addEventListener('input',function(){
+ let q=this.value.toLowerCase();
+ document.querySelectorAll('.post').forEach(post=>{
+  post.style.display=post.innerText.toLowerCase().includes(q)?'block':'none';
+ });
+});
+</script>
+
+</body>
+</html>
